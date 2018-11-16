@@ -1,0 +1,146 @@
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
+<style>
+
+  #wrapper {
+    width: 535px;
+    margin: 0 auto;
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  .paragraph {
+    padding: 40px 10px 0 10px;
+    font-size: 20px;
+    font-family: 'Alegreya', 'serif';
+    color: #2C3242;
+  }
+
+  .letter {
+    display: inline-block;
+    font-size: 40px;
+    font-family: 'Oswald', 'san-serif';
+    color: #29B8FF;
+    min-width: 75px;
+    height: 25px;
+    margin: 2px 5px 2px 5px;
+    text-align: center;
+  }
+
+  .square-container {
+    margin: 2px 5px 0px 5px;
+    display: inline-block;
+    border: 2px solid #FFF;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+</style>
+</head>
+<body>
+<script>
+
+addLine = function(svg, x, y) {
+  x1 = x
+  y1 = Math.round(Math.random() * 25) + y;
+  y2 = Math.round(Math.random() * 25) + y;
+  x2 = x + 25
+  svg.append("line")
+     .attr("x1", x1)
+     .attr("y1", y1)
+     .attr("x2", x2)
+     .attr("y2", y2)
+     .attr("stroke", "#FF4AB5")
+     .attr("stroke-width", "2px");
+}
+
+addGridLine = function(svg, x1, y1, x2, y2) {
+  svg.append("line")
+     .attr("x1", x1)
+     .attr("y1", y1)
+     .attr("x2", x2)
+     .attr("y2", y2)
+     .attr("stroke", "#FFF")
+     .attr("stroke-width", "2px");
+}
+
+addGrid = function(svg) {
+  addGridLine(svg, 0, 25, 75, 25);
+  addGridLine(svg, 0, 50, 75, 50);
+  addGridLine(svg, 25, 0, 25, 75);
+  addGridLine(svg, 50, 0, 50, 75);
+}
+
+addSquare = function() {
+  div = d3.select("#squares").append("div").attr("class", "square-container");
+  svg = div.append("svg").attr("width", 75).attr("height", 75).attr("shape-rendering", "auto");
+  svg.append("rect")
+     .attr("x", 0)
+     .attr("y", 0)
+     .attr("width", 75)
+     .attr("height", 75)
+     .attr("fill",  "#FFD4F2");
+
+  addLine(svg, 0, 0);
+  addLine(svg, 0, 25);
+  addLine(svg, 0, 50);
+  addLine(svg, 25, 0);
+  addLine(svg, 25, 25);
+  addLine(svg, 25, 50);
+  addLine(svg, 50, 0);
+  addLine(svg, 50, 25);
+  addLine(svg, 50, 50);
+  addGrid(svg);
+}
+
+window.onload = function() {
+  addSquare();
+  addSquare();
+  addSquare();
+  addSquare();
+  addSquare();
+  addSquare();
+}
+
+</script>
+<div id="wrapper">
+  <ul>
+   <div class="letter">S</div>
+   <div class="letter">U</div>
+   <div class="letter">P</div>
+   <div class="letter">E</div>
+   <div class="letter">R</div>
+   <div class="letter">B</div>
+  </ul>
+  <ul><div id="squares"></ul>
+  <ul>
+    <div class="letter">S</div>
+    <div class="letter">Q</div>
+    <div class="letter">U</div>
+    <div class="letter">A</div>
+    <div class="letter">R</div>
+    <div class="letter">E</div>
+  </ul>
+  <ul class="paragraph">
+    Hello, this is a
+    <font color="#FF4AB5">Superb Square</font>,
+    This type of square is
+    used to increase the amount of Superbness in its
+    immediate vicinity. Other squares may be manufactured
+    which alternative effects. For example, you may in your
+    travels encounter a
+    <font color="#ffa31a">Spooky Square</font>
+    or maybe even (if you are unlucky) a
+    <font color="#B6752F">Sordid Square</font>.
+    The powers granted by such squares, which may be identified
+    by their distinctive alliterative and hexanumeric quality,
+    are universal and irresistible. Likewise, they
+    are also <i>wholly imaginary</i>. Please be careful when
+    administering to children under the age of 12.
+  </ul>
+</div>
+</body>
