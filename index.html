@@ -9,6 +9,10 @@
     margin: 0 auto;
   }
 
+  #squares {
+    overflow: hidden;
+  }
+
   ul {
     padding: 0;
     margin: 0;
@@ -36,7 +40,8 @@
     margin: 2px 5px 0px 5px;
     display: inline-block;
     border: 2px solid #FFF;
-    border-radius: 5px;
+    border-radius: 10px;
+    background-color: #FFD4F2;
     overflow: hidden;
   }
 </style>
@@ -44,47 +49,56 @@
 <body>
 <script>
 
-addLine = function(svg, x, y) {
-  x1 = x
-  y1 = Math.round(Math.random() * 25) + y;
-  y2 = Math.round(Math.random() * 25) + y;
-  x2 = x + 25
-  svg.append("line")
-     .attr("x1", x1)
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+randomLine = function(line, x, y) {
+  let x1 = x
+  let y1 = getRandomInt(25) + y;
+  let y2 = getRandomInt(25) + y;
+  let x2 = x + 25;
+  line.attr("x1", x1)
+     .attr("x0", x)
+     .attr("y0", y)
      .attr("y1", y1)
      .attr("x2", x2)
      .attr("y2", y2)
      .attr("stroke", "#FF4AB5")
-     .attr("stroke-width", "2px");
+     .attr("stroke-width", "2px")
 }
 
-addGridLine = function(svg, x1, y1, x2, y2) {
-  svg.append("line")
-     .attr("x1", x1)
-     .attr("y1", y1)
-     .attr("x2", x2)
-     .attr("y2", y2)
-     .attr("stroke", "#FFF")
-     .attr("stroke-width", "2px");
+addLine = function(svg, x, y) {
+  line = svg.append("line");
+  randomLine(line, x, y);
 }
 
-addGrid = function(svg) {
-  addGridLine(svg, 0, 25, 75, 25);
-  addGridLine(svg, 0, 50, 75, 50);
-  addGridLine(svg, 25, 0, 25, 75);
-  addGridLine(svg, 50, 0, 50, 75);
+addSquares = function() {
+  addSquare();
+  addSquare();
+  addSquare();
+  addSquare();
+  addSquare();
+  addSquare();
+}
+
+addGridSquare = function(svg, x, y) {
+  svg.append("rect")
+     .attr("x", x)
+     .attr("y", y)
+     .attr("width", 25)
+     .attr("height", 25)
+     .attr("stroke", "white")
+     .attr("stroke-width", "2px")
+     .attr("fill-opacity", 0);
 }
 
 addSquare = function() {
   div = d3.select("#squares").append("div").attr("class", "square-container");
-  svg = div.append("svg").attr("width", 75).attr("height", 75).attr("shape-rendering", "auto");
-  svg.append("rect")
-     .attr("x", 0)
-     .attr("y", 0)
-     .attr("width", 75)
-     .attr("height", 75)
-     .attr("fill",  "#FFD4F2");
-
+  svg = div.append("svg")
+           .attr("width", 75)
+           .attr("height", 75)
+           .attr("shape-rendering", "auto");
   addLine(svg, 0, 0);
   addLine(svg, 0, 25);
   addLine(svg, 0, 50);
@@ -94,16 +108,36 @@ addSquare = function() {
   addLine(svg, 50, 0);
   addLine(svg, 50, 25);
   addLine(svg, 50, 50);
-  addGrid(svg);
+  addGridSquare(svg, 0, 0);
+  addGridSquare(svg, 0, 25);
+  addGridSquare(svg, 0, 50);
+  addGridSquare(svg, 25, 0);
+  addGridSquare(svg, 25, 25);
+  addGridSquare(svg, 25, 50);
+  addGridSquare(svg, 50, 0);
+  addGridSquare(svg, 50, 25);
+  addGridSquare(svg, 50, 50);
 }
 
 window.onload = function() {
-  addSquare();
-  addSquare();
-  addSquare();
-  addSquare();
-  addSquare();
-  addSquare();
+  addSquares();
+  setInterval(moveLine, 200);
+}
+
+moveLine = function() {
+  d3.select("#squares")
+    .selectAll("line")
+    .each(function(d) {
+      let r = Math.random();
+      if (r < .01) {
+        let line = d3.select(this);
+        let x = parseInt(line.attr('x0'), 10);
+        let y = parseInt(line.attr('y0'), 10);
+        if (x != null && y != null) {
+          randomLine(line, x, y);
+        }
+      }
+    });
 }
 
 </script>
