@@ -1,0 +1,189 @@
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
+<style>
+
+  #wrapper {
+    width: 650px;
+    margin: 0 auto;
+    height: 90%;
+    padding-top: 50px;
+  }
+
+  #letter-square-container {
+    width: 535px;
+    margin: 0 auto;
+  }
+
+  #squares {
+    overflow: hidden;
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  .paragraph {
+    padding: 40px 30px 0 30px;
+    font-size: 20px;
+    font-family: 'Alegreya', 'serif';
+    color: #2C3242;
+  }
+
+  .letter {
+    display: inline-block;
+    font-size: 40px;
+    font-family: 'Oswald', 'san-serif';
+    color: #29B8FF;
+    min-width: 75px;
+    height: 25px;
+    margin: 2px 5px 2px 5px;
+    text-align: center;
+  }
+
+  .square-container {
+    margin: 2px 5px 0px 5px;
+    display: inline-block;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid #f0f5fb;
+    background-color: #FFD4F2;
+  }
+</style>
+</head>
+<body>
+<script>
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+randomLine = function(line, x, y) {
+  let x1 = x
+  let y1 = getRandomInt(25) + y;
+  let y2 = getRandomInt(25) + y;
+  let x2 = x + 25;
+  line.attr("x1", x1)
+     .attr("x0", x)
+     .attr("y0", y)
+     .attr("y1", y1)
+     .attr("x2", x2)
+     .attr("y2", y2)
+     .attr("stroke", "#FF4AB5")
+     .attr("stroke-width", "2px")
+}
+
+addLine = function(svg, x, y) {
+  line = svg.append("line");
+  randomLine(line, x, y);
+}
+
+addSquares = function() {
+  addSquare();
+  addSquare();
+  addSquare();
+  addSquare();
+  addSquare();
+  addSquare();
+}
+
+addGridSquare = function(svg, x, y) {
+  svg.append("rect")
+     .attr("x", x)
+     .attr("y", y)
+     .attr("width", 25)
+     .attr("height", 25)
+     .attr("stroke", "#f0f5fb")
+     .attr("stroke-width", "2px")
+     .attr("fill-opacity", 0);
+}
+
+addSquare = function() {
+  div = d3.select("#squares").append("div").attr("class", "square-container");
+  svg = div.append("svg")
+           .attr("width", 75)
+           .attr("height", 75)
+           .attr("shape-rendering", "auto");
+  addLine(svg, 0, 0);
+  addLine(svg, 0, 25);
+  addLine(svg, 0, 50);
+  addLine(svg, 25, 0);
+  addLine(svg, 25, 25);
+  addLine(svg, 25, 50);
+  addLine(svg, 50, 0);
+  addLine(svg, 50, 25);
+  addLine(svg, 50, 50);
+  addGridSquare(svg, 0, 0);
+  addGridSquare(svg, 0, 25);
+  addGridSquare(svg, 0, 50);
+  addGridSquare(svg, 25, 0);
+  addGridSquare(svg, 25, 25);
+  addGridSquare(svg, 25, 50);
+  addGridSquare(svg, 50, 0);
+  addGridSquare(svg, 50, 25);
+  addGridSquare(svg, 50, 50);
+}
+
+window.onload = function() {
+  addSquares();
+  setInterval(moveLine, 200);
+}
+
+moveLine = function() {
+  d3.select("#squares")
+    .selectAll("line")
+    .each(function(d) {
+      let r = Math.random();
+      if (r < .01) {
+        let line = d3.select(this);
+        let x = parseInt(line.attr('x0'), 10);
+        let y = parseInt(line.attr('y0'), 10);
+        if (x != null && y != null) {
+          randomLine(line, x, y);
+        }
+      }
+    });
+}
+
+</script>
+<div id="wrapper">
+  <div id="letter-square-container">
+    <ul>
+     <div class="letter">S</div>
+     <div class="letter">U</div>
+     <div class="letter">P</div>
+     <div class="letter">E</div>
+     <div class="letter">R</div>
+     <div class="letter">B</div>
+    </ul>
+    <ul><div id="squares"></ul>
+    <ul>
+      <div class="letter">S</div>
+      <div class="letter">Q</div>
+      <div class="letter">U</div>
+      <div class="letter">A</div>
+      <div class="letter">R</div>
+      <div class="letter">E</div>
+    </ul>
+  </div>
+  <ul class="paragraph">
+    Hello, this is a
+    <font color="#FF4AB5">Superb Square</font>.
+    This type of square is
+    used to increase the amount of Superbness in its
+    immediate vicinity. Other squares may be manufactured
+    to produce alternative effects. For example, you may in your
+    travels encounter a
+    <font color="#ffa31a">Spooky Square</font>
+    or perhaps (if you are so unlucky) a
+    <font color="#B6752F">Sordid Square</font>.
+    The powers granted by such squares, which may be identified
+    by their distinctive alliterative and hexagrammatic quality,
+    are universal and irresistible. The only proven defense
+    is to shut your eyes, Marion.  Don't look at it no matter
+    what happens.
+  </ul>
+</div>
+</body>

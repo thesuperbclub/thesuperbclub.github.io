@@ -1,0 +1,89 @@
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
+<style>
+
+  #wrapper {
+    width: 650px;
+    height: 90%;
+    padding-top: 50px;
+    margin: 0 auto;
+    border-top: 0;
+    border-right: 0;
+  }
+
+  svg {
+    width: 650px;
+    margin: 0 auto;
+  }
+
+  #manifesto {
+    padding-top: 40px;
+    font-size: 20px;
+    font-family: 'Alegreya', 'serif';
+    width: 650px;
+    text-align: center;
+    color: #2C3242;
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+
+</style>
+</head>
+
+<body>
+<div id="wrapper">
+  <div id='anenome'></div>
+  <div id='manifesto'>
+    <ul>All hail the <font color="#cc00f5">Inimitable Anenome</font></ul>
+    <ul>Her Magnanimous Serenity</ul>
+    <ul>Neither abominable nor an enemy</ul>
+    <ul>Just an anomalous <font color="#ff6600">Sea Entity</font></ul>
+  </div>
+</div>
+<script>
+
+  // #wiggle2 and #wiggle8 have M and C (capitalized)
+  // will need to eventually account for that in wigglePath
+  var wiggleIds = ["#wiggle1", "#wiggle3", "#wiggle4", 
+                   "#wiggle5", "#wiggle6", "#wiggle7"];
+
+  //Purpose built, definitely not general purpose
+  wigglePath = function(path) {
+    let m = path.split("c ")[0];
+    let cs = path.split("c ")[1].split(" ");
+    let new_cs = [];
+    for (var i = 0; i < cs.length; i++) {
+        let pt = cs[i].split(",");
+        let x = parseFloat(pt[0]);
+        let y = parseFloat(pt[1]);
+        let new_x = x + x * (Math.random() * 2 - 1) * .05
+        let new_y = y + y * (Math.random() * 2 - 1) * .05
+        new_cs.push(new_x.toString() + "," + new_y.toString());
+    }
+    return m + "c " + new_cs.join(" ");
+  }
+
+
+  wiggleTentacle = function() {
+    for (var i=0; i < wiggleIds.length; i++) {
+      var tentacle = d3.select(wiggleIds[i]);
+      if (Math.random() < .3) {
+        tentacle.attr("d", wigglePath(tentacle.attr("d")));
+      }
+    }
+  }
+
+  window.onload = function() {
+    d3.xml("assets/anenome.svg").then(function(xml, error) {
+          if (error) throw error;
+          document.getElementById('anenome').appendChild(xml.documentElement);
+          window.setInterval(wiggleTentacle, 200);
+    });
+  }
+
+</script>
+</body>

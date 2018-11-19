@@ -1,0 +1,59 @@
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
+<style>
+
+  #wrapper {
+    width: 650px;
+    margin: 0 auto;
+    height: 90%;
+    padding-top: 50px;
+  }
+
+  .paragraph {
+    padding: 40px 30px 0 30px;
+    font-size: 20px;
+    font-family: 'Alegreya', 'serif';
+    color: #2C3242;
+  }
+
+  .play-button {
+    cursor: pointer;
+    color: #f75013;
+  }
+
+</style>
+</head>
+<body>
+<script>
+window.onload = function() {
+  var player = document.getElementById('player');
+  var buttons = document.getElementsByClassName('play-button');
+  for (var i=0; i < buttons.length; i++) {
+    var button = buttons[i]
+    button.addEventListener("click", function() {player.play()});
+  }
+}
+</script>
+<audio id="player" src="assets/superbclub.ogg" type="audio/ogg"></audio>
+<div id="wrapper">
+
+  <p class='paragraph'>
+  The <font class="play-button">Superb Club</font> is a mythical organization
+  emerging from a chance encounter between founders Lighting Bolt and
+  Inorganic Material in a volcanic bar near Lisbon. Originally known as
+  the Quarrymen, the organization emerged a few billion years later as
+  the <font class="play-button">Superb Club</font> after learning how
+  to play their instruments and developing a brain capable of
+  (limited) self-awareness. 
+  <p>
+  
+  <p class='paragraph'>
+  You may notice that that a particularly pleasing regular quadrilateral
+  shares <i>both</i> the same first letter and same number of letters
+  as "superb". This, of course, is no coincidence! The most sacred of
+  shapes, The Wholly Square, is intricately tied to the club's identity
+  via these two powerful, shared features.
+  </p>
+</div>
+</body>

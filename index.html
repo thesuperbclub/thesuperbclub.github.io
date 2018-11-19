@@ -1,179 +1,109 @@
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.js"></script>
+<head>
 <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
 <style>
 
-  #wrapper {
-    width: 535px;
-    margin: 0 auto;
+  body {
+    background-image: url('assets/graph-paper.jpg');
   }
 
-  #squares {
-    overflow: hidden;
-  }
-
-  ul {
+  p {
     padding: 0;
     margin: 0;
   }
 
-  .paragraph {
-    padding: 40px 10px 0 10px;
-    font-size: 20px;
-    font-family: 'Alegreya', 'serif';
-    color: #2C3242;
+  #left-container {
+      font-family: 'Oswald', 'san-serif';
+      font-size: 40px;
+      line-height: .5em;
+      letter-spacing: 2px;
+      width: 200px;
+      height: 100%;
+      margin: 0 auto;
+      position: absolute;
+      border-right: 2px dotted #29B8FF;
   }
 
-  .letter {
-    display: inline-block;
-    font-size: 40px;
-    font-family: 'Oswald', 'san-serif';
+  #right-container {
+      left: 200px;
+      width: calc(100% - 200px);
+      margin: 0 auto;
+      height: 100%;
+      position: absolute;
+  }
+
+  #superb-square {
     color: #29B8FF;
-    min-width: 75px;
-    height: 25px;
-    margin: 2px 5px 2px 5px;
-    text-align: center;
+    cursor: pointer;
   }
 
-  .square-container {
-    margin: 2px 5px 0px 5px;
-    display: inline-block;
-    border: 2px solid #FFF;
-    border-radius: 10px;
-    background-color: #FFD4F2;
-    overflow: hidden;
+  #anenome {
+    color: #cc00f5;
+    cursor: pointer;
   }
+
+  #theclub {
+    color: #f75013;
+    cursor: pointer;
+  }
+
+  #right-iframe {
+    width: 100%;
+    height: 100%;
+  }
+
+  #notes {
+    color: #72ffaf;
+    cursor: pointer;
+  }
+
 </style>
+
 </head>
+
+
 <body>
-<script>
 
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
+    <script>
+    function loadSuperbSquare() {
+      let iframe = document.getElementById("right-iframe");
+      iframe.src = "superb-square.html";
+    }
 
-randomLine = function(line, x, y) {
-  let x1 = x
-  let y1 = getRandomInt(25) + y;
-  let y2 = getRandomInt(25) + y;
-  let x2 = x + 25;
-  line.attr("x1", x1)
-     .attr("x0", x)
-     .attr("y0", y)
-     .attr("y1", y1)
-     .attr("x2", x2)
-     .attr("y2", y2)
-     .attr("stroke", "#FF4AB5")
-     .attr("stroke-width", "2px")
-}
+    function loadAnenome() {
+      let iframe = document.getElementById("right-iframe");
+      iframe.src = "anenome.html";
+    }
 
-addLine = function(svg, x, y) {
-  line = svg.append("line");
-  randomLine(line, x, y);
-}
+    function loadTheClub() {
+      let iframe = document.getElementById("right-iframe");
+      iframe.src = "theclub.html";
+    }
 
-addSquares = function() {
-  addSquare();
-  addSquare();
-  addSquare();
-  addSquare();
-  addSquare();
-  addSquare();
-}
+    function loadNotes() {
+      let iframe = document.getElementById("right-iframe");
+      iframe.src = "notes.html";
+    }
+    </script>
 
-addGridSquare = function(svg, x, y) {
-  svg.append("rect")
-     .attr("x", x)
-     .attr("y", y)
-     .attr("width", 25)
-     .attr("height", 25)
-     .attr("stroke", "white")
-     .attr("stroke-width", "2px")
-     .attr("fill-opacity", 0);
-}
-
-addSquare = function() {
-  div = d3.select("#squares").append("div").attr("class", "square-container");
-  svg = div.append("svg")
-           .attr("width", 75)
-           .attr("height", 75)
-           .attr("shape-rendering", "auto");
-  addLine(svg, 0, 0);
-  addLine(svg, 0, 25);
-  addLine(svg, 0, 50);
-  addLine(svg, 25, 0);
-  addLine(svg, 25, 25);
-  addLine(svg, 25, 50);
-  addLine(svg, 50, 0);
-  addLine(svg, 50, 25);
-  addLine(svg, 50, 50);
-  addGridSquare(svg, 0, 0);
-  addGridSquare(svg, 0, 25);
-  addGridSquare(svg, 0, 50);
-  addGridSquare(svg, 25, 0);
-  addGridSquare(svg, 25, 25);
-  addGridSquare(svg, 25, 50);
-  addGridSquare(svg, 50, 0);
-  addGridSquare(svg, 50, 25);
-  addGridSquare(svg, 50, 50);
-}
-
-window.onload = function() {
-  addSquares();
-  setInterval(moveLine, 200);
-}
-
-moveLine = function() {
-  d3.select("#squares")
-    .selectAll("line")
-    .each(function(d) {
-      let r = Math.random();
-      if (r < .01) {
-        let line = d3.select(this);
-        let x = parseInt(line.attr('x0'), 10);
-        let y = parseInt(line.attr('y0'), 10);
-        if (x != null && y != null) {
-          randomLine(line, x, y);
-        }
-      }
-    });
-}
-
-</script>
-<div id="wrapper">
-  <ul>
-   <div class="letter">S</div>
-   <div class="letter">U</div>
-   <div class="letter">P</div>
-   <div class="letter">E</div>
-   <div class="letter">R</div>
-   <div class="letter">B</div>
-  </ul>
-  <ul><div id="squares"></ul>
-  <ul>
-    <div class="letter">S</div>
-    <div class="letter">Q</div>
-    <div class="letter">U</div>
-    <div class="letter">A</div>
-    <div class="letter">R</div>
-    <div class="letter">E</div>
-  </ul>
-  <ul class="paragraph">
-    Hello, this is a
-    <font color="#FF4AB5">Superb Square</font>.
-    This type of square is
-    used to increase the amount of Superbness in its
-    immediate vicinity. Other squares may be manufactured
-    which alternative effects. For example, you may in your
-    travels encounter a
-    <font color="#ffa31a">Spooky Square</font>
-    or maybe even (if you are unlucky) a
-    <font color="#B6752F">Sordid Square</font>.
-    The powers granted by such squares, which may be identified
-    by their distinctive alliterative and hexagrammatic quality,
-    are universal and irresistible. Please exercise caution
-    and do not operate heavy machine while under the influence.
-  </ul>
-</div>
+  <div id="left-container">
+    <ul id="theclub" onclick="loadTheClub()">
+      <p>The</p>
+      <p>Club</p>
+    </ul>
+    <ul id="superb-square" onclick="loadSuperbSquare()">
+      <p>Superb</p>
+      <p>Square</p>
+    </ul>
+    <ul id="anenome" onclick="loadAnenome()">
+      <p>Ane</p>
+      <p>nome</p>
+    </ul>
+    <ul id="notes" onclick="loadNotes()">
+      <p>Wave</p>
+      <p>Forms</p>
+    </ul>
+  </div>
+  <div id="right-container">
+    <iframe id="right-iframe" frameBorder="0"></iframe>
+  </div>
 </body>
