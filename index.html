@@ -56,6 +56,11 @@
     cursor: pointer;
   }
 
+  #catpigs {
+    color: #f75013;
+    cursor: pointer;
+  }
+
 </style>
 
 </head>
@@ -84,6 +89,11 @@
       iframe.src = "notes.html";
     }
 
+    function loadCatPigs() {
+      let iframe = document.getElementById("right-iframe");
+      iframe.src = "catpigs.html";
+    }
+
     window.onload = loadTheClub;
     </script>
 
@@ -103,6 +113,10 @@
     <ul id="notes" onclick="loadNotes()">
       <p>Wave</p>
       <p>Forms</p>
+    </ul>
+    <ul id="catpigs" onclick="loadCatPigs()">
+      <p>Cat</p>
+      <p>Pigs</p>
     </ul>
   </div>
   <div id="right-container">
